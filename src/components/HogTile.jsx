@@ -42,18 +42,19 @@ export default function HogTile({ hog, viewHogDetails, setviewHogDetails }) {
     filterHog = newHogs;
   }
 
+  filterHog = filterHog.filter((singleHog) => !hideHog.includes(singleHog.name))
+
   if (sortHog === "name") {
-    filterHog = filterHog.sort((hogA, hogB) =>
-      hogA.name.localCompare(hogB.name)
-    );
+    filterHog = [...filterHog].sort((hogA, hogB) => hogA.name.localeCompare(hogB.name));
   } else if (sortHog === "weight") {
-    filterHog = filterHog.sort((a, b) => a.weight - b.weight);
+    filterHog = [...filterHog].sort((a, b) => a.weight - b.weight);
   }
+  
 
   return (
     <div className="ui grid container ui-cards" onClick={handleClick}>
       <Filter showGreased={showGreased} toggleGreased={toggleGreased} />
-      <select onChange={(e) => handleSort(e)} value={sortHog}>
+      <select onChange={(e) => handleSort(e)} value={sortHog} className="ui dropdown">
         <option value="">Select</option>
         <option value="name">Sort by name</option>
         <option value="weight">Sort by weight</option>
