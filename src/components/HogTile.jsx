@@ -20,7 +20,7 @@ export default function HogTile({ hog, viewHogDetails, setviewHogDetails }) {
   const handleSort = (e) => {
     setSortHog(e.target.value);
   };
-  const handleClick = () => {
+  const handleClick = (hog) => {
     if (viewHogDetails === hog.name) {
       setviewHogDetails(null);
     } else {
@@ -52,7 +52,7 @@ export default function HogTile({ hog, viewHogDetails, setviewHogDetails }) {
   
 
   return (
-    <div className="ui grid container ui-cards" onClick={handleClick}>
+    <div className="ui grid container ui-cards" >
       <Filter showGreased={showGreased} toggleGreased={toggleGreased} />
       <select onChange={(e) => handleSort(e)} value={sortHog} className="ui dropdown">
         <option value="">Select</option>
@@ -63,14 +63,14 @@ export default function HogTile({ hog, viewHogDetails, setviewHogDetails }) {
       <Form addHog={addHog}/>
       {filterHog.map((singleHog) => {
         return (
-          <div className="ui eight wide column card" key={singleHog.name}>
+          <div className="ui eight wide column card" key={singleHog.name} onClick={() => handleClick(singleHog)}>
             <div className="image">
               <img src={singleHog.image} alt={`${singleHog.name}'s image `} />
             </div>
             <div className="content">
               <h2>Name:{singleHog.name}</h2>
 
-              {viewHogDetails === hog.name && (
+              {viewHogDetails === singleHog.name  &&(
                 <div>
                   <p>Specialty:{singleHog.specialty}</p>
                   <p>Greased:{singleHog.greased ? "true" : "false"}</p>
